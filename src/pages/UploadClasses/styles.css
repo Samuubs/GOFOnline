@@ -1,0 +1,43 @@
+#box-container {
+  width: 100vw;
+  height: 100vh;
+}
+  
+#box-container header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  
+#box-container header h1 {
+  font-size: 21px;
+  padding-left: 15px;
+  margin-left: 15px;
+  border-left: 1px solid #ddd;
+}
+
+#box-container header button svg {
+  margin-right: 10px;
+}
+
+#box-container header button:hover {
+  opacity: 0.9;
+}
+
+.upload {
+  border-radius: 4px;
+  padding: 30px;
+  text-align: center;
+  border: 1px dashed var(--color-primary-light);
+  color: var(--color-primary-light);
+  cursor: pointer;
+  width: 500px;
+}
+
+.dropfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}

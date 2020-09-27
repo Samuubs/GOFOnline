@@ -1,0 +1,42 @@
+#page-classes-list {
+    width: 100vw;
+    height: 100vh;
+}
+
+.class-list {
+    padding: 40px;
+    list-style: none;
+}
+
+.class-item {
+    padding: 18px;
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #DDD;
+}
+
+.class-url {
+    text-decoration: none;
+    width: 20rem;
+    height: 5.6rem;
+    background: var(--color-secundary);
+    color: var(--color-button-text);
+    border: 0;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font: 700 1.4rem Archivo;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    transition: 0.2s;
+    text-decoration: none;
+}
+
+@media (min-width: 700px) {
+    #page-classes-list {
+        max-width: 100%;
+    }
+}

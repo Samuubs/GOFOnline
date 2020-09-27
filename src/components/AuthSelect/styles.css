@@ -1,0 +1,22 @@
+.auth-select-block {
+    position: relative;
+}
+  
+.auth-select-block + .auth-select-block {
+    margin-top: 1.4rem;
+}
+  
+.auth-select-block label {
+    font-size: 1.4rem;
+}
+  
+.auth-select-block select {
+    width: 352px;
+    height: 72px;
+    background: #FAFAFC;
+    border: 1px solid #E6E6F0;
+    box-sizing: border-box;
+    padding: 12px;
+    color: #757575;
+    font: 1.7rem Archivo;
+}

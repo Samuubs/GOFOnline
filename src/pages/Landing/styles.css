@@ -1,0 +1,262 @@
+body {
+    overflow-x: hidden;
+}
+#page-landing {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--color-text-in-primary);
+    background: var(--color-primary);
+    overflow-x: hidden;
+}
+
+.logo-container img {
+    height: 10rem;
+}
+
+.hero-image {
+    width: 100%;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 3.2rem;
+}
+
+.logo-container h2 {
+    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 4.6rem;
+    margin-top: 0.8rem;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    margin: 3.2rem 0;
+}
+.buttons-container a {
+    width: 30rem;
+    height: 10.4rem;
+    border-radius: 0.8rem;
+    margin-right: 1.6rem;
+    font: 700 2rem Archivo;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    color: var(--color-button-text);
+
+    transition: background-color 0.2s;
+}
+.buttons-container a:first-child {
+    margin-right: 1.6rem;
+}
+.buttons-container a img {
+    margin-right: 2.4rem;
+}
+.buttons-container a.mainActionButton {
+    background: var(--color-primary-lighter);
+}
+.buttons-container a.secondaryActionButton {
+    background: var(--color-secundary);
+}
+.buttons-container a.mainActionButton:hover {
+    background: var(--color-primary-light);
+}
+.buttons-container a.secondaryActionButton:hover {
+    background: var(--color-secundary-dark);
+}
+
+.total-connections {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.total-connections img {
+    margin-left: 0.8rem;
+}
+
+.scroll-down-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.chevron {
+    position: absolute;
+    top: -20px;
+    width: 28px;
+    height: 8px;
+    transform: scale3d(0.5, 0.5, 0.5);
+    animation: move 3s ease-out infinite;   
+  }
+  
+  .chevron:first-child {
+    animation: move 3s ease-out 1s infinite;
+  }
+  
+  .chevron:nth-child(2) {
+    animation: move 3s ease-out 2s infinite;
+  }
+  
+  .chevron:before,
+  .chevron:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background: #fff;
+  }
+  
+  .chevron:before {
+    left: 0;
+    transform: skew(0deg, 30deg);
+  }
+  
+  .chevron:after {
+    right: 0;
+    width: 50%;
+    transform: skew(0deg, -30deg);
+  }
+  
+  @keyframes move {
+    25% {
+      opacity: 1;
+  
+    }
+    33% {
+      opacity: 1;
+      transform: translateY(30px);
+    }
+    67% {
+      opacity: 1;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+    }
+  }
+
+  .text {
+    display: block;
+    margin-top: 50px;
+    font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0.5;
+    animation: pulse 2s linear alternate infinite;
+}
+
+.user-header {
+    /* background: red; */
+    display: flex;
+    padding: 14px;
+    align-items: center;
+    width: 80%;
+    position: absolute;
+    top: 0;
+    justify-content: space-between;
+}
+
+.user-profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-profile h3 {
+    margin-left: 10px;
+}
+
+.user-header img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.chart-content {
+    margin-top: 2.6rem;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.charts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 80%;
+}
+
+@media (min-width: 1100px) {
+    #page-landing-content {
+        max-width: 1100px;
+        display: grid;
+        grid-template-rows: 350px 1fr;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-areas:
+        "logo hero hero"
+        "buttons buttons total";
+    }
+    .logo-container {
+        grid-area: logo;
+        text-align: left;
+        align-self: center;
+        margin: 0;
+    }
+    .logo-container img {
+        height: 100%;
+    }
+    .logo-container h2 {
+        text-align: initial;
+        font-size: 3.6rem;
+    }
+    .hero-image {
+        grid-area: hero;
+        justify-self: end;
+    }
+    .buttons-container {
+        grid-area: buttons;
+        justify-content: flex-start;
+    }
+    .buttons-container a {
+        font-size: 2.4rem;
+    }
+    .total-connections {
+        grid-area: total;
+        justify-self: flex-end;
+    }
+    .scroll-down-container {
+        top: 40px;
+    }
+    .charts {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 90%;
+    }
+}
