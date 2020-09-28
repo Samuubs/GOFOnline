@@ -10,18 +10,19 @@ import Check from '../../assets/images/icons/check.svg';
 import backIcon from '../../assets/images/icons/back.svg';
 
 import api from '../../services/api';
+import Loading from '../../components/Loading';
 
 import './styles.css';
 
 function FinishRegister() {
     return (
         <div className="finished-register-container">
-            <img src={Check} alt=""/>
-                
+            <img src={Check} alt="" />
+
             <h1>Cadastro concluído</h1>
 
             <p>
-                Agora você faz parte da plataforma do GOF Online. <br/>
+                Agora você faz parte da plataforma do GOF Online. <br />
                 Tenha uma ótima experiência.
             </p>
 
@@ -29,7 +30,7 @@ function FinishRegister() {
                 Fazer login
             </Link>
 
-            <div className="finished-register-background" style={{ backgroundImage: `url(${Background})` }}/>
+            <div className="finished-register-background" style={{ backgroundImage: `url(${Background})` }} />
 
         </div>
     )
@@ -40,6 +41,7 @@ function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [profile, setProfile] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const [registerFinished, setRegisterFinished] = useState(false);
 
@@ -52,21 +54,21 @@ function Register() {
             profile
         }
 
-        // const response = api.post('/users', user);
-        // response.then(newUser => {
-        //     console.log(newUser);
-        //     if (response) {
-        //         setRegisterFinished(true);
-        //     } else {
-        //         alert("Erro ao realizar cadastro!");
-        //     }       
-        // }).catch((error) => {
-        //     console.log(error);
-        //     alert("Erro ao realizar cadastro!");
-        // })
+        setLoading(true);
 
-        // Apagar isso quando integrar com backend
-        setRegisterFinished(true);
+        const response = api.post('/users', user);
+        response.then(newUser => {
+            console.log(newUser);
+            if (response) {
+                setLoading(false);
+                setRegisterFinished(true);
+            } else {
+                alert("Erro ao realizar cadastro!");
+            }
+        }).catch((error) => {
+            console.log(error);
+            alert("Erro ao realizar cadastro!");
+        })
     }
 
     if (registerFinished) {
@@ -75,9 +77,10 @@ function Register() {
 
     return (
         <div id="register-page-container" className="container">
+            {loading && <Loading />}
             <div className="register-container">
                 <Link to="/login" className="backToLogin">
-                    <img src={backIcon} alt="Voltar"/>
+                    <img src={backIcon} alt="Voltar" />
                 </Link>
 
                 <main>
@@ -111,7 +114,7 @@ function Register() {
                         />
 
                         <AuthSelect
-                            name="subject" 
+                            name="subject"
                             value={profile}
                             onChange={(e) => setProfile(e.target.value)}
                             options={[
@@ -119,7 +122,7 @@ function Register() {
                                 { value: 'Professor', label: 'Professor' },
                             ]}
                         />
-                        
+
                         <button type="submit">Concluir cadastro</button>
                     </form>
 
@@ -128,7 +131,7 @@ function Register() {
 
             <div className="proffy-board">
                 <img src={Logo} alt="" className="register-logo" />
-                <div className="register-background" style={{ backgroundImage: `url(${Background})` }}/>
+                <div className="register-background" style={{ backgroundImage: `url(${Background})` }} />
                 <p>
                     Sua plaforma de estudos online.
                 </p>

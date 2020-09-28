@@ -1,0 +1,77 @@
+.loader-wrap {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.734);
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+}
+
+.loading-text {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 200;
+    font-size: 38px;
+    text-align: center;
+    color: var(--color-primary);
+    margin-top: 100px;
+}
+
+.circle-1 {
+    margin: 0 auto;
+    width: 100px;
+    height: 50px; 
+    border-radius: 100px 100px 0 0;
+    border-top: 4px solid var(--color-primary);
+    border-left: 4px solid var(--color-primary);
+    border-right: 4px solid var(--color-primary);
+    animation: 2s loader linear infinite;
+    transform-origin: 50% 100%;
+}
+
+.circle-2 {
+    width: 80px;
+    height: 40px;
+    margin: 50px auto;
+    border-radius: 0 0 80px 80px;
+    border-bottom: 4px solid var(--color-secundary);
+    border-left: 4px solid var(--color-secundary);
+    border-right: 4px solid var(--color-secundary);
+    animation: 2s loader-reverse linear infinite;
+    transform-origin: 50% 0%;
+}
+
+.circle-3 {
+    width: 60px;
+    height: 30px;
+    margin: 50px auto;
+    border-radius: 0 0 80px 80px;
+    border-bottom: 4px solid var(--color-primary-darker);
+    border-left: 4px solid var(--color-primary-darker);
+    border-right: 4px solid var(--color-primary-darker);
+    animation: 1s loader linear infinite;
+    transform-origin: 50% 0%;
+}
+
+.circle-4 {
+    width: 40px;
+    height: 20px;
+    margin: 50px auto;
+    border-radius: 0 0 80px 80px;
+    border-bottom: 5px solid var(--color-secundary-dark);
+    border-left: 5px solid var(--color-secundary-dark);
+    border-right: 5px solid var(--color-secundary-dark);
+    animation: 1.5s loader-reverse linear infinite;
+    transform-origin: 50% 0%;
+}
+
+@keyframes loader {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+}
+  
+@keyframes loader-reverse {
+    from {transform: rotate(360deg)}
+    to {transform: rotate(-360deg)}
+}

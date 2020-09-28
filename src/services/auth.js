@@ -6,7 +6,7 @@ export function singIn() {
                 user: {
                     name: "Samu",
                     email: "samu@gmail.com",
-                    profile: "Aluno",
+                    profile: "Professor",
                     avatar: "https://avatars1.githubusercontent.com/u/33751384?s=460&u=bba99304003d18646b6e4ed1152f02a23f00d081&v=4"
                 }
             })

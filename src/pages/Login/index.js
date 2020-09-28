@@ -9,6 +9,7 @@ import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
 
 import { useAuth } from '../../contexts/auth';
 
+import Loading from '../../components/Loading';
 import './styles.css';
 
 function Login() {
@@ -16,21 +17,31 @@ function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const { signIn } = useAuth();
 
     async function handleLogin(e) {
         e.preventDefault();
-        const response = await signIn(username, password);
-        if (response) {
-            history.push("/");
+        if (username === '' && password === '') {
+            alert("Preencha todos os dados!");
+            return;
         } else {
-            alert("Erro ao realizar login!")
+            setLoading(true);
+            const response = await signIn(username, password);
+            if (response) {
+                setLoading(false);
+                history.push("/");
+            } else {
+                setLoading(false);
+                alert("Erro ao realizar login!")
+            }
         }
     }
 
     return (
         <div id="login-page-container" className="container">
+            {loading && <Loading/>}
             <div className="proffy-board">
                 <div className="login-background" style={{ backgroundImage: `url(${Background})` }}/>
                 <img src={Logo} alt="" className="login-logo" />

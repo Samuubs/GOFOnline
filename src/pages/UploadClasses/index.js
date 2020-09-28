@@ -1,14 +1,10 @@
-import React, { FormEvent, useState } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import React, { useState, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import api from "../../services/api";
-import Background from '../../assets/images/background.svg';
 
 import Dropzone from 'react-dropzone';
-import socket from 'socket.io-client';
 
-import { MdCheckCircle, MdError, MdLink } from "react-icons/md";
-
-import Logo from '../../assets/images/logo-purple.png';
+import { useDropzone } from 'react-dropzone'
 import warningIcon from '../../assets/images/icons/warning.svg';
 
 import './styles.css';
@@ -24,17 +20,15 @@ function UploadClasses(props) {
 
     const handleUpload = (e) => {
         e.preventDefault();
-        // @ts-ignore
-        if (newClasses.forEach !== undefined ) {
-            // @ts-ignore
+        if (newClasses.forEach !== undefined) {
             newClasses.forEach(file => {
                 const formData = new FormData();
                 // const { id } = this.props.match.params;
                 console.log(title);
                 console.log(file);
-    
+
                 formData.append('file', file);
-    
+
                 // api.post(`boxes/${id}/files`, formData);
             });
         } else {
@@ -48,7 +42,7 @@ function UploadClasses(props) {
                 title="Que incrível que você quer dar aulas."
                 description="Faça o upload dos arquivos da aula para seus alunos!"
             />
-            <main>
+            <main className="a">
                 <form onSubmit={handleUpload}>
                     <fieldset>
                         <legend>Sobre a aula</legend>
@@ -57,22 +51,22 @@ function UploadClasses(props) {
                             name="nome"
                             label="Titulo da aula"
                             value={title}
-                            onChange={(e) => {setTitle(e.target.value)}}
+                            onChange={(e) => { setTitle(e.target.value) }}
                         />
                     </fieldset>
 
-                    <fieldset>
-                        <legend className="dropfile">
-                            <Dropzone onDropAccepted={(files) => { setClasses(files) }}>
-                                {({ getRootProps, getInputProps }) => (
-                                    <div className="upload" {...getRootProps()}>
+                    <div className="dropfile">
+                        <Dropzone onDrop={acceptedFiles => setClasses(acceptedFiles)}>
+                            {({ getRootProps, getInputProps }) => (
+                                <section className="upload">
+                                    <div {...getRootProps()}>
                                         <input {...getInputProps()} />
                                         <p>Arraste arquivos ou clique aqui</p>
                                     </div>
-                                )}
-                            </Dropzone>
-                        </legend>
-                    </fieldset>
+                                </section>
+                            )}
+                        </Dropzone>
+                    </div>
 
                     <footer>
                         <p>

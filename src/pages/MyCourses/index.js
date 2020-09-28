@@ -1,7 +1,7 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
-import CurseItem, {Curse} from '../../components/CurseItem';
+import CurseItem from '../../components/CurseItem';
 import { useAuth } from '../../contexts/auth';
 
 import './styles.css';
@@ -57,12 +57,12 @@ function MyCourses() {
     const finalDescription = user?.profile === "Professor" ? "Aqui você pode gerenciar seus cursos!" : "Aqui você pode ver os cursos matriculados!";
     return (
       <div id="page-teacher-list" className="container">
-        <PageHeader title="Estes são seus cursos" description={finalDescription}/>
+        <PageHeader title="Estes são seus cursos." description={finalDescription}/>
   
         {curses.length > 0 ? (
           <main>
-              {curses.map((curses) => {
-                  return <CurseItem key={curses.id} curse={curses} />
+              {curses.map((curse) => {
+                  return <CurseItem key={curse.id} curse={curse} />
               })}
           </main>
         ) : (

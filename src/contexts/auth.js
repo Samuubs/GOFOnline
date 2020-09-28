@@ -25,25 +25,28 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     async function signIn(username, password) {
-        // const user = {
-        //     username,
-        //     password
-        // };
+        const user = {
+            username,
+            password
+        };
 
-        // const response = await api.get("/auth", {
-        //     params: user
-        // })
+        console.log(user);
 
-        const response = await auth.singIn();
-        if (response) {
-            setUser(response.user);
-
-            api.defaults.headers['Authorization'] = `Bearer ${response.token}`;
+        try {
+            const response = await api.post("/auth", user);
+            if (response) {
+                setUser(response.data.user);
     
-            localStorage.setItem('@GofAuth:user', JSON.stringify(response.user));
-            localStorage.setItem('@GofAuth:token', response.token);
-            return true;
+                api.defaults.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
+        
+                localStorage.setItem('@GofAuth:user', JSON.stringify(response.data.user));
+                localStorage.setItem('@GofAuth:token', response.data.user);
+                return true;
+            }
+        } catch (error) {
+            return false;
         }
+
         return false;
     }
 
