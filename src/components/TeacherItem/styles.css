@@ -75,6 +75,27 @@
   .teacher-item footer a:hover {
     background: var(--color-secundary-dark);
   }
+
+  .buy-curse {
+    background-color: var(--color-primary-lighter);
+    width: 20rem;
+    height: 5.6rem;
+    border: 0;
+    border-radius: 0.8rem;
+    margin-right: 1.6rem;
+    font-family: Archivo;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--color-button-text);
+    transition: background-color 0.2s;
+  }
+
+  .buy-curse:hover {
+    background-color: var(--color-primary-dark);
+  }
   
   @media (min-width: 700px) {
     .teacher-item header,

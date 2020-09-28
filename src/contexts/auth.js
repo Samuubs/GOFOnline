@@ -30,8 +30,6 @@ export const AuthProvider = ({ children }) => {
             password
         };
 
-        console.log(user);
-
         try {
             const response = await api.post("/auth", user);
             if (response) {

@@ -11,6 +11,14 @@ const TeacherItem = ({ teacher }) => {
       user_id: teacher.id, 
     });
   }
+
+  const BuyIcon = () => {
+    return (
+      <svg style={{marginRight: 12}} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path fill="#FFF" d="M10 20.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.305-15l-3.432 12h-10.428l-3.777-9h-2.168l4.615 11h13.239l3.474-12h1.929l.743-2h-4.195zm-5.805 0h-2v-2h-2v2h-2v2h2v2h2v-2h2v-2zm0 5h-6v2h6v-2zm0 3h-6v2h6v-2z"/>
+      </svg>
+    )
+  }
   
   return (
     <article className="teacher-item">
@@ -26,7 +34,7 @@ const TeacherItem = ({ teacher }) => {
       </p>
       <footer>
         <p>
-          Preço/hora
+          Preço
           <strong>
             R$
             {teacher.cost}
@@ -41,6 +49,7 @@ const TeacherItem = ({ teacher }) => {
           <img src={whastappIcon} alt="Whatsapp" />
           Entrar em contato
         </a>
+        <button className="buy-curse"><BuyIcon/>Comprar</button>
       </footer>
     </article>
   );

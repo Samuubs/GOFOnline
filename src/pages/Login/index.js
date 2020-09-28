@@ -23,7 +23,7 @@ function Login() {
 
     async function handleLogin(e) {
         e.preventDefault();
-        if (username === '' && password === '') {
+        if (username === '' || password === '') {
             alert("Preencha todos os dados!");
             return;
         } else {
