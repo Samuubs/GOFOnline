@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
             const storagedToken = localStorage.getItem('@GofAuth:token');
 
             if (storagedUser && storagedToken) {
-                api.defaults.headers['Authorization'] = `Bearer ${storagedToken}`;
+                api.defaults.headers['Authorization'] = `${storagedToken}`;
                 setUser(JSON.parse(storagedUser));
             }
 
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
                 api.defaults.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
         
                 localStorage.setItem('@GofAuth:user', JSON.stringify(response.data.user));
-                localStorage.setItem('@GofAuth:token', response.data.user);
+                localStorage.setItem('@GofAuth:token', response.data.accessToken);
                 return true;
             }
         } catch (error) {

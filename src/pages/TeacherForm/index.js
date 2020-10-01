@@ -37,17 +37,20 @@ function TeacherForm() {
     function handleCreateClass (e) {
         e.preventDefault();
 
-        const curse = {
+        const course = {
             name,
             avatar,
             whatsapp,
             bio,
             subject,
             cost: Number(cost),
-            schedule: scheduleItems,
         }
 
-        console.log(curse);
+        console.log(course);
+
+        api.post("/courses", course).then(response => {
+            console.log(response.data);
+        })
 
         // api.post('classes', {
         //     name,
@@ -199,7 +202,7 @@ function TeacherForm() {
                             Importante! <br/>
                             Preencha todos os dados
                         </p>
-                        <button type="submit">Salvar cadastro</button>
+                        <button type="submit">Salvar curso</button>
                     </footer>
                 </form>
             </main>

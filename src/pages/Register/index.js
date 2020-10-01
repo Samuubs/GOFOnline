@@ -54,11 +54,12 @@ function Register() {
             profile
         }
 
+        console.log(user);
+
         setLoading(true);
 
         const response = api.post('/users', user);
         response.then(newUser => {
-            console.log(newUser);
             if (response) {
                 setLoading(false);
                 setRegisterFinished(true);
@@ -66,7 +67,6 @@ function Register() {
                 alert("Erro ao realizar cadastro!");
             }
         }).catch((error) => {
-            console.log(error);
             alert("Erro ao realizar cadastro!");
         })
     }
@@ -118,8 +118,8 @@ function Register() {
                             value={profile}
                             onChange={(e) => setProfile(e.target.value)}
                             options={[
-                                { value: 'Aluno', label: 'Aluno' },
-                                { value: 'Professor', label: 'Professor' },
+                                { value: 'STUDENT', label: 'Aluno' },
+                                { value: 'TEACHER', label: 'Professor' },
                             ]}
                         />
 

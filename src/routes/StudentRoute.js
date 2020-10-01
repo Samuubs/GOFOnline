@@ -16,7 +16,7 @@ function TeacherRoute({ component: Component, ...rest }) {
     }
 
     if (!Component) return null;
-    const permission = user?.profile === "Aluno" && signed ? true : false;
+    const permission = user?.profile === "STUDENT" && signed ? true : false;
     return (
       <Route
         {...rest}

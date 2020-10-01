@@ -7,54 +7,50 @@ import Select from '../../components/Select';
 
 import './styles.css';
 
+const Loading = () => {
+  return (
+    <div className="loader" style={{ marginTop: "6%" }}>
+      <div className="circle-1 circle">
+        <div className="circle-2 circle">
+          <div className="circle-3 circle">
+            <div className="circle-4 circle">
+            </div>
+          </div>
+        </div>
+      </div>
+      <p className="loading-text">Carregando...</p>
+    </div>
+  )
+}
+
 function TeacherList() {
-  const mockData = [
-      {
-          name: "Curso 1", 
-          avatar: "https://avatars1.githubusercontent.com/u/33751384?s=460&u=bba99304003d18646b6e4ed1152f02a23f00d081&v=4", 
-          whatsapp: 33133131,
-          bio: "Melhor curso da plataforma de longe!", 
-          subject: "Fisica",
-          cost: 80,
-          id: 1
-      },
-      {
-          name: "Curso 2", 
-          avatar: "https://avatars3.githubusercontent.com/u/32658656?s=460&u=ecbdacd46202567458a58d4484a168edf91eac22&v=4", 
-          whatsapp: 33133131,
-          bio: "Curso ruim, não vale a pena", 
-          subject: "Biologia",
-          cost: 1,
-          id: 2
-      }
-  ]
-
   const [subject, setSubject] = useState('');
-  const [weekDay, setWeekDay] = useState('');
   const [time, setTime] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const [teachers, setTeachers] = useState(mockData);
+  const [teachers, setTeachers] = useState([]);
 
-//   useEffect(() => {
-//     // Fazer requisiçao para buscar todos os professores
-//     api.get('classes').then(response => {
-//         const {teachers} = response.data;
-//         setTeachers(teachers);
-//     })
-//   }, []);
+  useEffect(() => {
+    setLoading(true);
+    api.get("/courses").then(response => {
+      console.log(response.data);
+      setTeachers(response.data);
+      setLoading(false);
+    })
+  }, []);
 
   async function searchTeachers(e) {
     e.preventDefault();
 
-    const response = await api.get('classes', {
-      params: {
-        subject,
-        week_day: weekDay,
-        time,
-      },
-    });
+    // const response = await api.get('classes', {
+    //   params: {
+    //     subject,
+    //     week_day: weekDay,
+    //     time,
+    //   },
+    // });
 
-    setTeachers(response.data);
+    // setTeachers(response.data);
   }
 
   return (
@@ -80,10 +76,10 @@ function TeacherList() {
               { value: 'Inglês', label: 'Inglês' },
             ]}
           />
-          <Input 
-            name="time" 
-            label="Horário de atendimento" 
-            type="time" 
+          <Input
+            name="time"
+            label="Horário de atendimento"
+            type="time"
             value={time}
             onChange={e => { setTime(e.target.value) }}
           />
@@ -92,19 +88,22 @@ function TeacherList() {
         </form>
       </PageHeader>
 
-      {teachers.length > 0 ? (
-        <main>
-            {teachers.map((teacher) => {
+      {
+        loading ? <Loading /> :
+          teachers.length > 0 ? (
+            <main>
+              {teachers.map((teacher) => {
                 return <TeacherItem key={teacher.id} teacher={teacher} />
-            })}
-        </main>
-      ) : (
-          <main>
-            <p className="no-search">
-                Não há professores disponíveis! :(
+              })}
+            </main>
+          ) : (
+              <main>
+                <p className="no-search">
+                  Não há professores disponíveis! :(
             </p>
-          </main>
-      )}
+              </main>
+            )
+      }
     </div>
   );
 }

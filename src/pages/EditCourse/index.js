@@ -197,7 +197,7 @@ function EditCourse(props) {
                             Importante! <br/>
                             Preencha todos os dados
                         </p>
-                        <button type="submit">Salvar cadastro</button>
+                        <button type="submit">Salvar curso</button>
                     </footer>
                 </form>
             </main>

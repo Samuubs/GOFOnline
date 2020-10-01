@@ -22,7 +22,7 @@ const CurseItem = ({ curse }) => {
         </p>
         <footer>
             <p>
-            Preço/hora
+            Preço
             <strong>
                 R$
                 {curse.cost}
@@ -30,13 +30,13 @@ const CurseItem = ({ curse }) => {
             </p>
 
             {
-                user?.profile === "Professor" && <Link className="curse-edit" to={{ pathname: '/edit-course', state: { curse }}}> 
+                user?.profile === "TEACHER" && <Link className="curse-edit" to={{ pathname: '/edit-course', state: { curse }}}> 
                     Editar 
                 </Link>
             }
 
             {
-                user?.profile === "Professor" ?               
+                user?.profile === "TEACHER" ?               
                 <Link to={{ pathname: '/add-classes', state: { curse }}} className="curse-add-class">
                     Adicionar Aulas
                 </Link>
