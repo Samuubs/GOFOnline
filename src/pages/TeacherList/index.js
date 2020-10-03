@@ -1,9 +1,10 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
-import TeacherItem, { Teacher } from '../../components/TeacherItem';
+import TeacherItem from '../../components/TeacherItem';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
+import { useAuth } from '../../contexts/auth';
 
 import './styles.css';
 
@@ -30,12 +31,32 @@ function TeacherList() {
 
   const [teachers, setTeachers] = useState([]);
 
+  const { user } = useAuth();
+
   useEffect(() => {
     setLoading(true);
-    api.get("/courses").then(response => {
-      console.log(response.data);
-      setTeachers(response.data);
-      setLoading(false);
+    api.get(`/users/${user.username}`).then(responseAluno => {
+      api.get("/courses").then(responseCourses => {
+        let coursesFinal = [];
+
+        const courses = responseCourses.data;
+        const userCourses = responseAluno.data.courses;
+
+        const coursesAux = [];
+        for (let i = 0; i < courses.length; i++) {
+          for (let j = 0; j < userCourses.length; j++) {
+            if (courses[i].id === userCourses[j].id) {
+              coursesAux.push(courses[i]);
+              break;
+            }
+          }
+        }
+
+        coursesFinal = courses.filter(x => !coursesAux.includes(x));
+
+        setTeachers(coursesFinal);
+        setLoading(false);
+      })     
     })
   }, []);
 

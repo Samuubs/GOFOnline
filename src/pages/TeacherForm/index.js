@@ -1,5 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth';
 
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
@@ -20,6 +21,8 @@ function TeacherForm() {
 
     const [subject, setSubject] = useState('');
     const [cost, setCost] = useState('');
+
+    const { user } = useAuth();
 
     const [scheduleItems, setScheduleItems] = useState(
         [
@@ -44,29 +47,17 @@ function TeacherForm() {
             bio,
             subject,
             cost: Number(cost),
+            teacher : {
+                name: user.name,
+                username: user.username,
+                password: user.password,
+                profile: user.profile
+            }
         }
 
-        console.log(course);
-
         api.post("/courses", course).then(response => {
-            console.log(response.data);
+            history.push('/curses');
         })
-
-        // api.post('classes', {
-        //     name,
-        //     avatar,
-        //     whatsapp,
-        //     bio,
-        //     subject,
-        //     cost: Number(cost),
-        //     schedule: scheduleItems,
-        //   }).then(() => {
-        //     alert('Aula cadastrada com sucesso!');
-      
-        //     history.push('/');
-        //   }).catch(() => {
-        //     alert('Erro no cadastro.');
-        //   });
     }
 
     function setScheduleItemValue (position, field, value) {

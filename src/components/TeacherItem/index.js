@@ -1,15 +1,38 @@
 import React from 'react';
-
-import './styles.css';
-
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth';
 import whastappIcon from '../../assets/images/icons/whatsapp.svg';
 import api from '../../services/api';
 
+import './styles.css';
+
 const TeacherItem = ({ teacher }) => {
+  const history = useHistory();
+
   function createNewConnection() {
     api.post('connections', { 
       user_id: teacher.id, 
     });
+  }
+
+  const { user } = useAuth();
+
+  function handleSubscribe(e) {
+    e.preventDefault();
+
+    const subscribe = {
+      courseId: teacher.id,
+      studentUsername: user.username,
+    }
+
+    api.post("/subscriptions", subscribe).then(response => {
+      if (response.status === 200) {
+        alert("Matricula realizada com sucesso!")
+        history.push('/');
+      } else {
+        alert("Erro ao realizar matricula!");
+      }
+    })
   }
 
   const BuyIcon = () => {
@@ -49,7 +72,7 @@ const TeacherItem = ({ teacher }) => {
           <img src={whastappIcon} alt="Whatsapp" />
           Entrar em contato
         </a>
-        <button className="buy-curse"><BuyIcon/>Comprar</button>
+        <button className="buy-curse" onClick={handleSubscribe}><BuyIcon/>Comprar</button>
       </footer>
     </article>
   );

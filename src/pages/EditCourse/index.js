@@ -1,5 +1,6 @@
-import React, { useState, FormEvent } from 'react';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth';
 
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
@@ -11,6 +12,8 @@ import api from '../../services/api';
 import './styles.css';
 
 function EditCourse(props) {
+    const history = useHistory();
+
     const [name, setName] = useState(props.location.state.curse?.name);
     const [avatar, setAvatar] = useState(props.location.state.curse?.avatar);
     const [bio, setBio] = useState(props.location.state.curse?.bio);
@@ -18,6 +21,8 @@ function EditCourse(props) {
 
     const [subject, setSubject] = useState(props.location.state.curse?.subject);
     const [cost, setCost] = useState(props.location.state.curse?.cost);
+
+    const { user } = useAuth();
 
     const [scheduleItems, setScheduleItems] = useState(
         [
@@ -35,7 +40,7 @@ function EditCourse(props) {
     function handleCreateClass (e) {
         e.preventDefault();
 
-        const curse = {
+        const course = {
             name,
             avatar,
             whatsapp,
@@ -43,25 +48,17 @@ function EditCourse(props) {
             subject,
             cost: Number(cost),
             schedule: scheduleItems,
+            teacher : {
+                name: user.name,
+                username: user.username,
+                password: user.password,
+                profile: user.profile
+            }
         }
 
-        console.log(curse);
-
-        // api.post('classes', {
-        //     name,
-        //     avatar,
-        //     whatsapp,
-        //     bio,
-        //     subject,
-        //     cost: Number(cost),
-        //     schedule: scheduleItems,
-        //   }).then(() => {
-        //     alert('Aula cadastrada com sucesso!');
-      
-        //     history.push('/');
-        //   }).catch(() => {
-        //     alert('Erro no cadastro.');
-        //   });
+        api.put(`/courses/${props.location.state.curse.id}`, course).then(response => {
+            history.push('/curses');
+        })
     }
 
     function setScheduleItemValue (position, field, value) {
