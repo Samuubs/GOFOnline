@@ -9,6 +9,7 @@ import MyCurses from '../pages/MyCourses';
 import EditCourses from '../pages/EditCourse';
 import UploadClasses from '../pages/UploadClasses';
 import WatchClasses from '../pages/WatchClasses';
+import Reports from '../pages/Reports';
 
 import TeacherRoute from './TeacherRoute';
 import GenericRoute from './GenericRoute';
@@ -22,6 +23,7 @@ const Routes = () => {
                 <Route path="/register" component={Register} />
                 <GenericRoute path="/" exact component={Landing} />
                 <GenericRoute path="/curses" component={MyCurses} />
+                <GenericRoute path="/reports" component={Reports} />
                 <StudentRoute path="/study" component={TeacherList} />
                 <StudentRoute path="/watch-classes" component={WatchClasses} />
                 <TeacherRoute path="/give-classes" component={TeacherForm} />

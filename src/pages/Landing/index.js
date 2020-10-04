@@ -17,13 +17,32 @@ import { Bar, Line } from 'react-chartjs-2';
 
 function Landing() {
   const history = useHistory();
-  const [totalConnections, setTotalConnections] = useState(0);
+  const [semanalConnections, setSemanalConnections] = useState(0);
+  const [rank, setRank] = useState([]);
 
   const { user, signOut } = useAuth();
 
   useEffect(() => {
     api.get(`/courses/rank/${10}`).then(response => {
-      // console.log(response.data);
+      const coursesRank = response.data;
+      let coursesStudents = [];
+      let coursesNames = [];
+
+      for (let i = 0; i < coursesRank.length; i++) {
+        coursesNames.push(coursesRank[i].name);
+        coursesStudents.push(coursesRank[i].students.length);
+      }
+
+      const rankFinal = [coursesNames, coursesStudents];
+      setRank(rankFinal);
+    })
+  }, []);
+
+  useEffect(() => {
+    api.get('/connections/per-day-of-week').then(response => {
+      const connectionsPerWeek = response.data;
+      const connectionsPerWeekFinal = Object.values(connectionsPerWeek);
+      setSemanalConnections(connectionsPerWeekFinal);
     })
   }, []);
 
@@ -47,19 +66,19 @@ function Landing() {
       <div className="buttons-container">
         <Link to="/study" className="mainActionButton">
           <img src={studyIcon} alt="Estudar" />
-                    Estudar
-                </Link>
+          Estudar
+        </Link>
 
         <Link to="/curses" className="secondaryActionButton">
           <img src={giveClassesIcon} alt="Dar aulas" />
-                    Meus Cursos
-                </Link>
+          Meus Cursos
+        </Link>
       </div>
     )
   }
 
   const dataTopCurses = {
-    labels: ['Curso 1', 'Curso 2', 'Curso 3', 'Curso 4', 'Curso 5', 'Curso 6', 'Curso 7'],
+    labels: rank[0],
     datasets: [
       {
         label: 'Alunos',
@@ -68,13 +87,13 @@ function Landing() {
         borderWidth: 1,
         hoverBackgroundColor: '#9871F5',
         hoverBorderColor: '#9871F5',
-        data: [100, 94, 80, 78, 71, 50, 42]
+        data: rank[1]
       }
     ]
   };
 
   const dataSemanalConections = {
-    labels: ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-Feira', 'Sábado', 'Domingo'],
+    labels: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-Feira', 'Sábado'],
     datasets: [
       {
         label: 'Conexões',
@@ -83,7 +102,7 @@ function Landing() {
         borderWidth: 1,
         hoverBackgroundColor: '#9871F5',
         hoverBorderColor: '#9871F5',
-        data: [65, 59, 80, 81, 56, 55, 40]
+        data: semanalConnections
       }
     ]
   };
@@ -154,7 +173,6 @@ function Landing() {
         <div className="user-header">
           <div className="user-profile">
             {avatar()}
-            {/* <img src={avatar()} alt="" /> */}
             <h3>{user?.name}</h3>
           </div>
           <button onClick={signOut} style={{ cursor: "pointer", backgroundColor: "transparent", color: "#FFF", outline: "nome", border: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -172,10 +190,6 @@ function Landing() {
 
           {renderButtonByProfile()}
 
-          {/* <span className="total-connections">
-                        Total de {totalConnections} conexões já realizadas <img src={purpleHeartIcon} alt="Coração roxo"/>
-                    </span> */}
-
         </div>
         <div className="scroll-down-container">
           <div className="chevron"></div>
@@ -190,6 +204,9 @@ function Landing() {
           {lineChartTopCurses()}
           {lineChartSemanalConections()}
         </div>
+        <Link to={{ pathname: '/reports', state: { semanalConnections, rank }}} className="button-reports" style={{marginBottom: 5, textDecoration: "none"}}>
+          Ver Relatórios
+        </Link>
       </div>
     </div>
   )

@@ -32,13 +32,11 @@ function MyCourses() {
     setLoading(true);
     if (user.profile === "TEACHER") {
       api.get(`/courses?teacherUsername=${user.username}`).then(response => {
-        console.log("professor", response.data);
         setCurses(response.data);
         setLoading(false);
       })
     } else {
       api.get(`/users/${user.username}`).then(response => {
-        console.log("aluno", response.data);
         setCurses(response.data.courses);
         setLoading(false);
       })

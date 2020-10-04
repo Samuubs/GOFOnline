@@ -30,7 +30,6 @@
     background-size: 100% 100%;
     background-position: center;
     position: absolute;
-    /* z-index: 0; */
 }
 
 .login-container {
@@ -72,6 +71,10 @@
     text-decoration: none;
     transition: background-color 0.2s;
     margin: 3.2rem auto;
+}
+
+.login-container main button:hover {
+    background: var(--color-secundary-dark);
 }
 
 .footer-login {
@@ -151,7 +154,5 @@
         background-size: 100% 100%;
         background-position: center;
         position: absolute;
-        /* z-index: 0; */
     }
-
 }

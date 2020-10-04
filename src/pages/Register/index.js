@@ -54,8 +54,6 @@ function Register() {
             profile
         }
 
-        console.log(user);
-
         setLoading(true);
 
         const response = api.post('/users', user);

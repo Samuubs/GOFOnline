@@ -10,9 +10,7 @@ const TeacherItem = ({ teacher }) => {
   const history = useHistory();
 
   function createNewConnection() {
-    api.post('connections', { 
-      user_id: teacher.id, 
-    });
+    api.post('/connections');
   }
 
   const { user } = useAuth();

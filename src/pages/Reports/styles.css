@@ -1,0 +1,33 @@
+#page-reports {
+    width: 100vw;
+    height: 100vh;
+}
+
+#page-reports main {
+    background: var(--color-box-base);
+    width: 100%;
+    max-width: 70vw;
+    border-radius: 0.8rem;
+    margin: -3.2rem auto 3.2rem;
+    padding: 5.4rem;
+    overflow: hidden;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-button {
+    width: 20vw;
+    padding: 20px;
+    outline: none;
+    border: solid;
+    cursor: pointer;
+}
+
+@media (min-width: 700px) {
+    #page-reports {
+        max-width: 100%;
+    }
+}
