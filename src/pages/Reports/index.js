@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import PageHeader from '../../components/PageHeader';
 
 import './styles.css';
 
 function Reports(props) {
-    const history = useHistory();
 
     const [content, setContent] = useState(0);
     const [rank, setRank] = useState(props.location.state.rank);

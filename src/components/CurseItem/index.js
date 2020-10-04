@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './styles.css';
-import api from '../../services/api';
 import { useAuth } from '../../contexts/auth';
 
 const CurseItem = ({ curse }) => {
@@ -28,7 +27,6 @@ const CurseItem = ({ curse }) => {
                 {curse.cost}
             </strong>
             </p>
-
             {
                 user?.profile === "TEACHER" && <Link className="curse-edit" to={{ pathname: '/edit-course', state: { curse }}}> 
                     Editar 
@@ -41,7 +39,7 @@ const CurseItem = ({ curse }) => {
                     Adicionar Aulas
                 </Link>
                 :
-                <Link to="/watch-classes" className="curse-add-class">
+                <Link to={{ pathname: "/watch-classes", state: { curse }}} className="curse-add-class">
                     Assistir Aulas
                 </Link>
             }

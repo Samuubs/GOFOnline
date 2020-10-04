@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 
-import Dropzone from 'react-dropzone';
+import axios from 'axios';
 
-import { useDropzone } from 'react-dropzone'
+import Dropzone from '../../components/Dropzone';
 import warningIcon from '../../assets/images/icons/warning.svg';
 
 import './styles.css';
@@ -14,25 +14,35 @@ import Input from "../../components/Input";
 function UploadClasses(props) {
     const history = useHistory();
 
-    // const [newClasses, setClasses] = useState([]);
-    const [newClasses, setClasses] = useState({});
     const [title, setTitle] = useState('');
+    const [course, setCourse] = useState(props.location.state.curse);
+    const [selectedFile, setSelectedFile] = useState();
 
-    const handleUpload = (e) => {
+    const handleUpload = async (e) => {
         e.preventDefault();
-        if (newClasses.forEach !== undefined) {
-            newClasses.forEach(file => {
-                const formData = new FormData();
-                // const { id } = this.props.match.params;
-                console.log(title);
-                console.log(file);
 
-                formData.append('file', file);
+        const classTitle = { title }
 
-                // api.post(`boxes/${id}/files`, formData);
-            });
+        if (title !== '' && selectedFile) {
+            const response = await api.post(`/courses/${course.id}/classes`, classTitle);
+
+            const url = response.data.url;
+            try {
+                await axios({
+                    method: 'put',
+                    url,
+                    data: selectedFile,
+                    headers: {
+                        "Content-Type": `video/mp4`,
+                    }
+                })
+
+                history.push('/curses');
+            } catch (error) {
+                console.log(error)
+            }        
         } else {
-            alert('Preencha todos os dados!');
+            alert("Preencha todos os dados!")
         }
     }
 
@@ -56,16 +66,21 @@ function UploadClasses(props) {
                     </fieldset>
 
                     <div className="dropfile">
-                        <Dropzone onDrop={acceptedFiles => setClasses(acceptedFiles)}>
-                            {({ getRootProps, getInputProps }) => (
-                                <section className="upload">
-                                    <div {...getRootProps()}>
-                                        <input {...getInputProps()} />
-                                        <p>Arraste arquivos ou clique aqui</p>
-                                    </div>
-                                </section>
-                            )}
-                        </Dropzone>
+                        <Dropzone onFileUploaded={setSelectedFile} />
+                    </div>
+
+                    <div>
+                        <h2 style={{ textAlign: "center", marginTop: 20 }}>Arquivo Selecionado</h2>
+                        {selectedFile ? (
+                            <ul className="class-list">
+                                <li className="class-item">
+                                    <span style={{maxWidth: 300}}>{selectedFile.name}</span>
+                                    <span>{ (selectedFile.size / (1024*1024)).toFixed(2)}MB</span>
+                                </li>
+                            </ul>
+                        ) : 
+                        <p style={{textAlign: "center", color: "#ccc", padding: 24}}>Nenhum arquivo ainda.</p>
+                        }
                     </div>
 
                     <footer>

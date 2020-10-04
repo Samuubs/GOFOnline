@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import logoImg from '../../assets/images/logo.png';
 import landingImg from '../../assets/images/landing.svg';
@@ -16,7 +16,6 @@ import api from '../../services/api';
 import { Bar, Line } from 'react-chartjs-2';
 
 function Landing() {
-  const history = useHistory();
   const [semanalConnections, setSemanalConnections] = useState(0);
   const [rank, setRank] = useState([]);
 

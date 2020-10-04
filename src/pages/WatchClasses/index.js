@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PageHeader from '../../components/PageHeader';
+
+import api from '../../services/api';
 
 import './styles.css';
 
@@ -7,48 +9,50 @@ const VideoPlayer = ({ url, close, positionY }) => {
     return (
         <div className="video-player-container" style={{ top: positionY }}>
             <button className="close-video-player" onClick={close}>X</button>
-            <iframe className="video-player"
-                src={url}>
-            </iframe>
+            <video autoPlay className="video-player">
+                <source src={url} type="video/mp4" />
+            </video>
         </div>
     )
 }
 
-function WatchClasses() {
-    const mockData = [
-        {
-            title: "ReactJs é melhor que VueJs",
-            url: "https://www.youtube.com/embed/tgbNymZ7vqY"
-        },
-        {
-            title: "Introdução ao ReactJs",
-            url: "https://www.youtube.com/embed/tgbNymZ7vqY"
-        },
-        {
-            title: "Construindo o primeiro componente",
-            url: "https://www.youtube.com/embed/tgbNymZ7vqY"
-        },
-        {
-            title: "Utilizando props no ReactJs",
-            url: "https://www.youtube.com/embed/tgbNymZ7vqY"
-        },
-        {
-            title: "Gerenciando os estados com Redux",
-            url: "https://www.youtube.com/embed/tgbNymZ7vqY"
-        },
-        {
-            title: "Construindo o projeto final",
-            url: "https://www.youtube.com/embed/tgbNymZ7vqY"
-        }
-    ]
+const Loading = () => {
+    return (
+        <div className="loader" style={{ margin: "6%" }}>
+            <div className="circle-1 circle">
+                <div className="circle-2 circle">
+                    <div className="circle-3 circle">
+                        <div className="circle-4 circle">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p className="loading-text">Carregando...</p>
+        </div>
+    )
+}
 
-    const [classes, setClasses] = useState(mockData);
+function WatchClasses(props) {
+    const [classes, setClasses] = useState([]);
     const [player, setPlayer] = useState(false);
     const [url, setUrl] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleWatchClass = (url) => {
+    useEffect(() => {
+        const course = props.location.state.curse;
+        setLoading(true);
+        api.get(`/courses/${course.id}`).then(async (response) => {
+            const classes = response.data.classes;
+            setClasses(classes);
+            setLoading(false);
+        })
+    }, [])
+
+    const handleWatchClass = async (url) => {
         document.body.style.overflow = "hidden";
-        setUrl(url);
+        const course = props.location.state.curse;
+        const responseGet = await api.get(`/courses/${course.id}/classes/${url}`)
+        setUrl(responseGet.data.url);
         setPlayer(true);
     }
 
@@ -65,20 +69,17 @@ function WatchClasses() {
                 description="Fique a vontade para assisti-las ou realizar o download."
             />
             <main>
-                <h1 style={{ textAlign: "center" }}>Curso do Samu</h1>
-
-                {
+                <h1 style={{ textAlign: "center" }}>{props.location.state.curse.name}</h1>
+                {loading ? <Loading /> : (
                     classes.length > 0 ? <ul className="class-list">
                         {
                             classes.map((classObject) => {
                                 return (
-                                    <li className="class-item">
+                                    <li className="class-item" key={classObject.id}>
                                         <span className="class-title">{classObject.title}</span>
                                         <span style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                            <a className="class-url-download" href={classObject.url} target="_blank">Download</a>
-                                            <button onClick={() => handleWatchClass(classObject.url)} className="class-url-watch" href={classObject.url} target="_blank">Assistir Aula</button>
+                                            <button onClick={() => handleWatchClass(classObject.id)} className="class-url-watch" href={classObject.url} target="_blank">Assistir Aula</button>
                                         </span>
-
                                     </li>
                                 )
                             })
@@ -89,7 +90,7 @@ function WatchClasses() {
                             <br />
                             :(
                         </h1>
-                }
+                )}
             </main>
         </div>
     )
